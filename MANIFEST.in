@@ -1,0 +1,6 @@
+include AUTHORS
+include LICENSE
+include README.rst
+recursive-include cmsplugin_contactform/static *
+recursive-include cmsplugin_contactform/locale *
+recursive-include comsplugin_contactform/templates *
