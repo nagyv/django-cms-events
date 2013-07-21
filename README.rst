@@ -9,7 +9,6 @@ Events from a given category can be listed.
 
 Extras:
 --------
-Events extend the teaser plugin with date and location.
 ical, gcalendar integration
 facebook event creation
 

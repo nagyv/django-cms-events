@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.utils.translation import ugettext as _
 from filer.fields.image import FilerImageField
@@ -11,6 +13,15 @@ class Category(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = 'Categories'
+
+
+class CurrentEventManager(models.Manager):
+
+    def get_queryset(self):
+        return super(CurrentEventManager, self).get_queryset().filter(event_end__gt=datetime.now())
+
 
 class Event(TimeStampedModel):
     title = models.CharField(_('Title'), max_length=50)
@@ -21,6 +32,9 @@ class Event(TimeStampedModel):
     image = FilerImageField(null=True, blank=True, default=None, verbose_name=_("Image"))
     category = models.ForeignKey(Category)
 
+    objects = models.Manager()
+    ongoing = CurrentEventManager()
+
     class Meta:
         ordering = ['-event_start']
 
@@ -30,3 +44,15 @@ class Event(TimeStampedModel):
 
     def __unicode__(self):
         return self.title 
+
+try:
+    from cms.models import CMSPlugin
+except ImportError:
+    pass
+else:
+    class EventListPlugin(CMSPlugin):
+        title = models.CharField(_('Title'), max_length=50)
+        category = models.ForeignKey(Category, null=True, blank=True)
+
+        def __unicode__(self):
+            return self.category.name
