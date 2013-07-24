@@ -55,4 +55,4 @@ else:
         category = models.ForeignKey(Category, null=True, blank=True)
 
         def __unicode__(self):
-            return self.category.name
+            return self.category.name if self.category else _('All events')
