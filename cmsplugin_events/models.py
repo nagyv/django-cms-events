@@ -31,6 +31,7 @@ class Event(TimeStampedModel):
     location = models.CharField(_('Location'), max_length=50, blank=True)
     image = FilerImageField(null=True, blank=True, default=None, verbose_name=_("Image"))
     category = models.ForeignKey(Category)
+    facebook_url = models.URLField(_('Facebook link'), blank=True)
 
     objects = models.Manager()
     ongoing = CurrentEventManager()
