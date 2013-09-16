@@ -37,7 +37,7 @@ class Event(TimeStampedModel):
     ongoing = CurrentEventManager()
 
     class Meta:
-        ordering = ['-event_start']
+        ordering = ['event_start']
 
     @models.permalink
     def get_absolute_url(self):
